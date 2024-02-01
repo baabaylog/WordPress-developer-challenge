@@ -7,7 +7,7 @@ A private airplane broker would like to run a marketing campaign aimed at attrac
 
 ## The Design
 The design is available at this URL:
-https://www.figma.com/file/Q5gVQnqVP3lpNBWratzbMm/Wonderful-WordPress-Engineer-Code-Challenge?node-id=0%3A1
+https://www.figma.com/file/tzMN6GYGAyGuAJB43PfrZN/Maxenius-WordPress-Developer-Challenge?type=design&node-id=0%3A1&mode=design&t=YOJZLS3wg5e5J43P-1
 
 ## Expected Delivery
 - A URL to view your webpage
