@@ -172,6 +172,13 @@ var mapStyles = [
   },
 ];
 let map;
+let markers = [];
+function clearMarkers() {
+  markers.forEach((marker) => {
+    marker.setMap(null); // Remove marker from map
+  });
+  markers = [];
+}
 (() => {
   map = new google.maps.Map(document.getElementById("pfa_map"), {
     center: { lat: 56.00919663863177, lng: 6.463585237261427 },
@@ -187,10 +194,11 @@ google.maps.event.addListener(map, "click", function (e) {
 
 jQuery(document).ready(($) => {
   $(document).on("change", "form#paf_csv_form input", function () {
+    clearMarkers();
     var formData = new FormData();
-    formData.append('action', 'pfa_read_csv_ajax');
-    formData.append('file', $(this)[0].files[0]);
-    formData.append('nonce', nonce);
+    formData.append("action", "pfa_read_csv_ajax");
+    formData.append("file", $(this)[0].files[0]);
+    formData.append("nonce", nonce);
     // Latitude , Longitude
     $.ajax({
       url: ajaxURL,
@@ -200,8 +208,8 @@ jQuery(document).ready(($) => {
       contentType: false,
       success: function (res) {
         // console.log(res);
-        if(!res.status) return;
-        const data = res?.data; 
+        if (!res.status) return;
+        const data = res?.data;
         setMarkers(data);
       },
       error: function (xhr, status, err) {
@@ -211,17 +219,27 @@ jQuery(document).ready(($) => {
   });
 });
 
-function setMarkers(airports){
-  if(!airports) return;
-  airports.forEach(port => {
+function setMarkers(airports) {
+  if (!airports) return;
+  airports.forEach((port) => {
     const lng = parseFloat(port.Longitude);
     const lat = parseFloat(port.Latitude);
 
     const marker = new google.maps.Marker({
-      position: {lat, lng},
+      position: { lat, lng },
       map: map,
-      title: port['Airport Name']
-  });
+      title: port["Airport Name"],
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE, 
+        scale: 7, 
+        fillColor: '#581616', 
+        fillOpacity: 2, 
+        strokeWeight: 1, 
+        strokeColor: 'red', 
+        labelOrigin: new google.maps.Point(0, 0) 
+    },
+    });
 
+    markers.push(marker);
   });
 }
